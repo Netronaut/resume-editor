@@ -1,0 +1,322 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Florian Nagel",
+    "label": "Software & Mobile-Entwickler · Design Systems · UX Designer",
+    "image": "/florian-nagel-avatar.jpeg",
+    "email": "flo@spielraum.ai",
+    "summary": "Software & Mobile developer with experience in iOS/Swift, React/Next.js, Node/NestJS, AWS/Kafka/Kubernetes, and UX/Design Systems. Led teams, shipped apps and data products, and facilitated design sprints.",
+    "profiles": []
+  },
+  "work": [
+    {
+      "name": "Freelancer / Selbständig",
+      "position": "Freelancer, Gründer und Unternehmer",
+      "startDate": "2011",
+      "summary": "Freelance software engineering and product/UX work across mobile, web, and cloud.",
+      "highlights": [
+        "Lead Developer (Coachhub): React/Next.js, NestJS microservices, AWS, Kafka, Kubernetes; Scrum/Kanban; requirements & releases; team onboarding and planning.",
+        "Design Systems and web relaunch projects (e.g., Auerswald) with Storybook and modern CSS toolchains.",
+        "Mobile AR app and CMS dashboard projects; iOS Swift development and prototyping."
+      ]
+    },
+    {
+      "name": "Creative Spielraum UG",
+      "position": "Gründer & Geschäftsführer",
+      "startDate": "2016",
+      "endDate": "2022",
+      "summary": "Founded and led a studio delivering mobile apps, web apps, and UX/design system work."
+    },
+    {
+      "name": "Coachhub GmbH",
+      "position": "Freelance Lead Developer",
+      "startDate": "2020-10",
+      "endDate": "2022-09",
+      "summary": "Lead Developer across platform initiatives; domain-driven design and event migration; multi-tenancy; secure file upload; component-based and design system integrations.",
+      "highlights": [
+        "NestJS DDD migration and Kafka integration",
+        "Frontend microservice integrations and orchestration",
+        "Secure file upload feature and component-based integrations",
+        "Design System integrations, team onboarding and planning"
+      ],
+      "url": "https://www.coachhub.com"
+    },
+    {
+      "name": "Steffen & Bach GmbH",
+      "position": "Freelance Software Engineer",
+      "startDate": "2016",
+      "endDate": "2018",
+      "summary": "Web applications and dashboards for enterprise clients.",
+      "highlights": [
+        "Statistics Dashboard: HTML5/CSS, PHP/MySQL; data visualization with animated charts; executive-level analytics (2017).",
+        "Customer Service Portal: Fleet management dashboard; B2B registration and credit tracking; CodeIgniter/PHP/MySQL (2017)."
+      ]
+    },
+    {
+      "name": "Volkswagen AG",
+      "position": "First & Second Level Support",
+      "startDate": "2005",
+      "endDate": "2007"
+    },
+    {
+      "name": "AutoVision GmbH",
+      "position": "Logistik & Verladung",
+      "startDate": "2007",
+      "endDate": "2009"
+    },
+    {
+      "name": "Stadt Braunschweig",
+      "position": "Personal Logistik & Betreuung",
+      "startDate": "2009",
+      "endDate": "2009"
+    },
+    {
+      "name": "Assmann Electronic",
+      "position": "First Level Support",
+      "startDate": "2010",
+      "endDate": "2010"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Ostfalia University of Applied Science",
+      "studyType": "Bachelor of Science",
+      "startDate": "2010",
+      "endDate": "2013"
+    },
+    {
+      "institution": "Teutloff Academy",
+      "area": "Technischer Assistent für Informatik",
+      "startDate": "2002",
+      "endDate": "2004"
+    },
+    {
+      "institution": "Lessing Realschule Wolfenbüttel",
+      "studyType": "Realschulabschluss Sekundar I",
+      "endDate": "2002"
+    },
+    {
+      "institution": "IHK Braunschweig",
+      "studyType": "Ausbilderschein (Informatik)",
+      "endDate": "2013"
+    },
+    {
+      "institution": "AJ&Smart",
+      "studyType": "Design Sprint MasterClass",
+      "endDate": "2018"
+    },
+    {
+      "institution": "UX Design & Interaction Design (Anfisa Bogomolova)",
+      "studyType": "UX Design (Double Diamond) & Interaction Design",
+      "endDate": "2019"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Programming",
+      "level": "",
+      "keywords": [
+        "Swift",
+        "SwiftUI",
+        "JavaScript",
+        "TypeScript",
+        "Java",
+        "PHP",
+        "Python",
+        "HTML5",
+        "CSS",
+        "Sass/Less",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "name": "Frameworks",
+      "keywords": ["iOS UIKit", "Node.js", "React", "Next.js", "NestJS", "TensorFlow"]
+    },
+    {
+      "name": "Tools & DevOps",
+      "keywords": [
+        "Docker",
+        "Vagrant",
+        "Grunt",
+        "npm",
+        "yarn",
+        "Git",
+        "Git-Flow",
+        "GitHub",
+        "GitHub Actions",
+        "Travis CI",
+        "Jenkins"
+      ]
+    },
+    {
+      "name": "Cloud & Services",
+      "keywords": ["AWS", "Google Cloud", "DigitalOcean", "Kubernetes", "Kafka"]
+    },
+    {
+      "name": "Databases & Data",
+      "keywords": [
+        "MongoDB",
+        "DynamoDB",
+        "Redis",
+        "GraphQL",
+        "MySQL",
+        "Postgres",
+        "ETL",
+        "Big Data Streaming"
+      ]
+    },
+    {
+      "name": "Design Systems",
+      "keywords": ["Design System Konzeption", "StorybookJS", "InVision DSM", "Zeroheight"]
+    },
+    {
+      "name": "UX & Product",
+      "keywords": [
+        "UX Konzeption & Design",
+        "Double Diamond",
+        "Design Thinking",
+        "Design Sprint Facilitation",
+        "Interaction Design",
+        "Information Architecture",
+        "Prototyping",
+        "Adobe XD",
+        "Sketch",
+        "InVision"
+      ]
+    },
+    {
+      "name": "Business & Leadership",
+      "keywords": [
+        "Geschäftsmodellentwicklung",
+        "Teamleitung",
+        "Agile/Scrum",
+        "Softwarearchitektur",
+        "Account-Management"
+      ]
+    }
+  ],
+  "languages": [
+    { "language": "Deutsch", "fluency": "Native" },
+    { "language": "English", "fluency": "Professional" }
+  ],
+  "projects": [
+    {
+      "name": "Coachhub Platform Initiatives",
+      "startDate": "2020-10",
+      "endDate": "2022-09",
+      "roles": ["Lead Developer"],
+      "entity": "Coachhub GmbH",
+      "type": "application",
+      "description": "Domain-driven design and Kafka event migration; multi-tenancy; secure file upload; component-based and design system integrations.",
+      "keywords": ["React", "Next.js", "NestJS", "AWS", "Kafka", "Kubernetes", "Scrum", "Kanban"]
+    },
+    {
+      "name": "Auerswald Website Relaunch",
+      "startDate": "2019-09",
+      "endDate": "2020-03",
+      "entity": "Auerswald GmbH & Co. KG",
+      "type": "website",
+      "description": "Modernized web presence; design system concept and implementation with Storybook; HTML/SASS tooling."
+    },
+    {
+      "name": "AR App + CMS Dashboard",
+      "startDate": "2019-01",
+      "endDate": "2019-08",
+      "entity": "IDEM Doku GmbH",
+      "type": "application",
+      "description": "iOS Swift app with AR; design sprint, UX, prototyping; product design and project leadership."
+    },
+    {
+      "name": "VDDB – Big-Data Echtzeit-Visualisierung",
+      "startDate": "2018-10",
+      "endDate": "2019-05",
+      "entity": "Großer deutscher Autobauer",
+      "type": "application",
+      "description": "Realtime visualization of very large IoT/road-condition datasets; APIs and UI for map-based insights.",
+      "keywords": ["Node.js", "React", "REST", "AWS", "Cloud Foundry", "DynamoDB", "ETL"]
+    },
+    {
+      "name": "MeinHeim ChatBot-App",
+      "startDate": "2018-04",
+      "endDate": "2018-07",
+      "entity": "Spielraum & Ostfalia HaW",
+      "type": "application",
+      "description": "Chatbot concept for tenant-landlord communication; design sprint facilitation; prototyping."
+    },
+    {
+      "name": "Statistics Dashboard (Enterprise)",
+      "startDate": "2017-06",
+      "endDate": "2017-11",
+      "entity": "Internationaler Saatguthersteller",
+      "type": "application",
+      "description": "iOS app to accelerate sales with feed, DMs, and product info.",
+      "keywords": ["iOS", "Swift", "Scrum"]
+    },
+    {
+      "name": "Statistics Dashboard",
+      "startDate": "2017-06",
+      "endDate": "2017-10",
+      "entity": "Steffen & Bach GmbH",
+      "type": "application",
+      "description": "Executive analytics dashboard; animated charts; PHP/MySQL backend and HTML5/CSS3 frontend."
+    },
+    {
+      "name": "Customer Service Portal",
+      "startDate": "2017-06",
+      "endDate": "2017-10",
+      "entity": "Steffen & Bach GmbH",
+      "type": "application",
+      "description": "Fleet management dashboard for B2B customers; registration and credit tracking; CodeIgniter/PHP/MySQL."
+    },
+    {
+      "name": "Science4Life Website",
+      "startDate": "2017-06",
+      "endDate": "2017-10",
+      "entity": "WeLabs",
+      "type": "website",
+      "description": "WordPress relaunch; template design and implementation; admin/hosting and account management.",
+      "url": "https://www.science4life.de/"
+    },
+    {
+      "name": "FreizeitApp – Nördliches Harzvorland",
+      "startDate": "2017-08",
+      "endDate": "2017-11",
+      "entity": "Nördliches Harzvorland e.V.",
+      "type": "application",
+      "description": "Concept and UX design for a context-aware regional mobile app; workshop facilitation and PM."
+    },
+    {
+      "name": "Drobt – Urban Location App",
+      "startDate": "2016-05",
+      "endDate": "2017-01",
+      "entity": "3os GmbH",
+      "type": "application",
+      "description": "iOS app and scalable AWS backend (Beanstalk/DynamoDB); Node.js; Scrum process."
+    },
+    {
+      "name": "Booomz – Funny voice messages",
+      "startDate": "2016-02",
+      "endDate": "2016-07",
+      "entity": "3os GmbH",
+      "type": "application",
+      "description": "iOS app focused on audio recording/playback and mixing; no backend for a lean implementation."
+    },
+    {
+      "name": "EnkeApp – Robert-Enke-Stiftung",
+      "startDate": "2014-05",
+      "endDate": "2015-04",
+      "entity": "Mobfish GmbH / Robert-Enke-Stiftung",
+      "type": "application",
+      "description": "Suicide-prevention info app with SOS hotline and location sharing; iOS implementation.",
+      "url": "https://robert-enke-stiftung.de/enkeapp"
+    },
+    {
+      "name": "Bachelorarbeit – Remote-Arbeitsplätze (Ostfalia)",
+      "startDate": "2013-04",
+      "endDate": "2014-02",
+      "type": "application",
+      "description": "OpenStack-based remote desktop system with Node.js middleware and Windows Server 2012; landing page and deployment."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "CertificateSection": { "title": "Certificates" },
+  "ContactSection": { "title": "Contact" },
+  "EducationSection": { "title": "Education" },
+  "LanguagesSection": { "title": "Languages" },
+  "ProjectsSection": { "title": "Projects" },
+  "SkillsSection": { "title": "Skills" },
+  "WorkSection": { "title": "Work Experience", "today": "today" },
+  "ResumeDocument": { "subject": "Profile {label}", "footer-note": "Resume {name}" }
+}

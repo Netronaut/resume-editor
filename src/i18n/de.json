@@ -1,0 +1,10 @@
+{
+  "CertificateSection": { "title": "Zertifizierungen" },
+  "ContactSection": { "title": "Kontakt" },
+  "EducationSection": { "title": "Ausbildung" },
+  "LanguagesSection": { "title": "Sprachen" },
+  "ProjectsSection": { "title": "Projekte" },
+  "SkillsSection": { "title": "Skills" },
+  "WorkSection": { "title": "Berufserfahrung", "Job": { "today": "heute" }, "today": "heute" },
+  "ResumeDocument": { "subject": "Steckbrief {label}", "footer-note": "Resumé {name}" }
+}
