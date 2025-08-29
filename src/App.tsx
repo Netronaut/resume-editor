@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, Suspense, lazy } from 'react'
 import { FileUpload } from './components/FileUpload'
-import { ResumeEditor } from './components/ResumeEditor'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { AlertCircle } from 'lucide-react'
+import { ErrorBoundary } from './components/ErrorBoundary'
+import { AlertCircle, Loader2 } from 'lucide-react'
+
+const LazyResumeEditor = lazy(() => import('./components/ResumeEditor').then(m => ({ default: m.ResumeEditor })))
 
 type AppState = 'upload' | 'edit'
 
@@ -43,7 +45,18 @@ export default function App() {
       )}
 
       {state === 'edit' && resumeData && (
-        <ResumeEditor initialResumeData={resumeData} onBack={handleBack} />
+        <ErrorBoundary>
+          <Suspense 
+            fallback={
+              <div className="flex min-h-screen items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin" />
+                <span className="ml-2">Loading resume editor...</span>
+              </div>
+            }
+          >
+            <LazyResumeEditor initialResumeData={resumeData} onBack={handleBack} />
+          </Suspense>
+        </ErrorBoundary>
       )}
     </div>
   )

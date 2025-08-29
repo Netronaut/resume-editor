@@ -1,9 +1,10 @@
-import { Download, ArrowLeft, AlertCircle, CheckCircle2 } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Download, ArrowLeft, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useState, Suspense, lazy } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { EnhancedJsonEditor } from './EnhancedJsonEditor'
+import { ErrorBoundary } from './ErrorBoundary'
 import {
   Dialog,
   DialogContent,
@@ -12,13 +13,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { PDFViewer } from '@react-pdf/renderer'
-import { NextIntlClientProvider } from 'next-intl'
-import { ResumeDocument } from './ResumeDocument'
-import messages from '../i18n/de.json'
 import schema from '@jsonresume/schema/schema.json'
 import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
+
+const LazyPDFPreview = lazy(() => import('./PDFPreview'))
 
 interface ResumeEditorProps {
   initialResumeData: ResumeSchema
@@ -150,11 +149,18 @@ export function ResumeEditor({ initialResumeData, onBack }: ResumeEditorProps) {
                 </DialogHeader>
                 <div className="flex-1 overflow-hidden">
                   {isValid && (
-                    <PDFViewer className="h-full w-full">
-                      <NextIntlClientProvider locale="de" messages={messages}>
-                        <ResumeDocument resume={resumeData} />
-                      </NextIntlClientProvider>
-                    </PDFViewer>
+                    <ErrorBoundary>
+                      <Suspense 
+                        fallback={
+                          <div className="flex h-full items-center justify-center">
+                            <Loader2 className="h-8 w-8 animate-spin" />
+                            <span className="ml-2">Loading PDF preview...</span>
+                          </div>
+                        }
+                      >
+                        <LazyPDFPreview resumeData={resumeData} />
+                      </Suspense>
+                    </ErrorBoundary>
                   )}
                 </div>
               </DialogContent>
