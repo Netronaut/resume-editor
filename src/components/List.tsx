@@ -1,9 +1,9 @@
-import { Text, View } from '@react-pdf/renderer';
-import { type PropsWithChildren } from 'react';
-import { spacing } from './styles';
+import { Text, View } from '@react-pdf/renderer'
+import { type PropsWithChildren } from 'react'
+import { spacing } from './styles'
 
 export function List({ children }: PropsWithChildren) {
-  return <View style={{ gap: spacing[2] }}>{children}</View>;
+  return <View style={{ gap: spacing[2] }}>{children}</View>
 }
 
 export function ListItem({ children }: PropsWithChildren) {
@@ -12,5 +12,5 @@ export function ListItem({ children }: PropsWithChildren) {
       <Text>•</Text>
       {children}
     </View>
-  );
+  )
 }

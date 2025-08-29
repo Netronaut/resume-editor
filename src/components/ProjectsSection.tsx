@@ -1,13 +1,13 @@
-import { Text, View } from '@react-pdf/renderer';
-import { useTranslations } from 'use-intl';
-import { sortByProp } from '../lib/util';
-import { Headline } from './Headline';
-import { List, ListItem } from './List';
-import { Section } from './Section';
-import { spacing } from './styles';
-import { formatDate } from './util';
+import { Text, View } from '@react-pdf/renderer'
+import { useTranslations } from 'use-intl'
+import { sortByProp } from '../lib/util'
+import { Headline } from './Headline'
+import { List, ListItem } from './List'
+import { Section } from './Section'
+import { spacing } from './styles'
+import { formatDate } from './util'
 
-type ProjectSchema = NonNullable<ResumeSchema['projects']>[number];
+type ProjectSchema = NonNullable<ResumeSchema['projects']>[number]
 
 function Project({ project }: { project: ProjectSchema }) {
   return (
@@ -27,19 +27,19 @@ function Project({ project }: { project: ProjectSchema }) {
         ))}
       </List>
     </View>
-  );
+  )
 }
 
 export function ProjectsSection({ resume }: { resume: ResumeSchema }) {
-  const t = useTranslations('ProjectsSection');
+  const t = useTranslations('ProjectsSection')
   const projects = resume.projects?.toSorted(sortByProp('startDate', 'desc')).map(p => ({
     ...p,
     startDate: formatDate(p.startDate),
     endDate: formatDate(p.endDate),
-  }));
+  }))
 
   if (!projects || projects?.length === 0) {
-    return;
+    return
   }
 
   return (
@@ -54,5 +54,5 @@ export function ProjectsSection({ resume }: { resume: ResumeSchema }) {
         ))}
       </View>
     </Section>
-  );
+  )
 }

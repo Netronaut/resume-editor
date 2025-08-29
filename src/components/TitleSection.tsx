@@ -1,7 +1,7 @@
-import { View } from '@react-pdf/renderer';
-import type { PropsWithChildren } from 'react';
-import { Headline } from './Headline';
-import { spacing } from './styles';
+import { View } from '@react-pdf/renderer'
+import type { PropsWithChildren } from 'react'
+import { Headline } from './Headline'
+import { spacing } from './styles'
 
 export function TitleSection({ title, children }: PropsWithChildren<{ title: string }>) {
   return (
@@ -9,5 +9,5 @@ export function TitleSection({ title, children }: PropsWithChildren<{ title: str
       <Headline level={2}>{title}</Headline>
       {children}
     </View>
-  );
+  )
 }

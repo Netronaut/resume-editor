@@ -1,4 +1,4 @@
-const baseSpacing = 10;
+const baseSpacing = 10
 
 export const spacing = {
   1: baseSpacing / 4,
@@ -11,4 +11,4 @@ export const spacing = {
   8: baseSpacing * 2.5,
   9: baseSpacing * 2.75,
   10: baseSpacing * 3,
-};
+}

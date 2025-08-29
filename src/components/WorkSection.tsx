@@ -1,16 +1,16 @@
-import { Link, Text, View } from '@react-pdf/renderer';
-import { useTranslations } from 'use-intl';
-import { sortByProp } from '../lib/util';
-import { Headline } from './Headline';
-import { List, ListItem } from './List';
-import { Section } from './Section';
-import { spacing } from './styles';
-import { formatDate } from './util';
+import { Link, Text, View } from '@react-pdf/renderer'
+import { useTranslations } from 'use-intl'
+import { sortByProp } from '../lib/util'
+import { Headline } from './Headline'
+import { List, ListItem } from './List'
+import { Section } from './Section'
+import { spacing } from './styles'
+import { formatDate } from './util'
 
-type JobSchema = NonNullable<ResumeSchema['work']>[number];
+type JobSchema = NonNullable<ResumeSchema['work']>[number]
 
 function Job({ job }: { job: JobSchema }) {
-  const t = useTranslations('WorkSection');
+  const t = useTranslations('WorkSection')
   return (
     <Section level={2} wrap={false}>
       <View style={{ gap: spacing[2] }}>
@@ -32,19 +32,19 @@ function Job({ job }: { job: JobSchema }) {
         </List>
       )}
     </Section>
-  );
+  )
 }
 
 export function WorkSection({ resume }: { resume: ResumeSchema }) {
-  const t = useTranslations('WorkSection');
+  const t = useTranslations('WorkSection')
   const work = resume.work?.toSorted(sortByProp('startDate', 'desc')).map(item => ({
     ...item,
     startDate: formatDate(item.startDate, { month: '2-digit', year: 'numeric' }),
     endDate: formatDate(item.endDate, { month: '2-digit', year: 'numeric' }),
-  }));
+  }))
 
   if (!work || work.length === 0) {
-    return;
+    return
   }
 
   return (
@@ -59,5 +59,5 @@ export function WorkSection({ resume }: { resume: ResumeSchema }) {
         ))}
       </View>
     </Section>
-  );
+  )
 }

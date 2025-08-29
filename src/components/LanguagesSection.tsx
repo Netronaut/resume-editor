@@ -1,11 +1,11 @@
-import { Text, View } from '@react-pdf/renderer';
-import { useTranslations } from 'use-intl';
-import { Headline } from './Headline';
-import { List, ListItem } from './List';
-import { Section } from './Section';
+import { Text, View } from '@react-pdf/renderer'
+import { useTranslations } from 'use-intl'
+import { Headline } from './Headline'
+import { List, ListItem } from './List'
+import { Section } from './Section'
 
 export function LanguagesSection({ resume }: { resume: ResumeSchema }) {
-  const t = useTranslations('LanguagesSection');
+  const t = useTranslations('LanguagesSection')
   return (
     <Section level={2}>
       <Headline level={2}>{t('title')}</Headline>
@@ -20,5 +20,5 @@ export function LanguagesSection({ resume }: { resume: ResumeSchema }) {
         ))}
       </List>
     </Section>
-  );
+  )
 }

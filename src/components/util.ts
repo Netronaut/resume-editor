@@ -1,4 +1,4 @@
-export const locale = 'de-DE';
+export const locale = 'de-DE'
 
 export function formatDate(
   date: string | undefined,
@@ -7,7 +7,7 @@ export function formatDate(
   }
 ): string | undefined {
   if (!date) {
-    return;
+    return
   }
-  return Intl.DateTimeFormat(locale, options).format(new Date(date));
+  return Intl.DateTimeFormat(locale, options).format(new Date(date))
 }
