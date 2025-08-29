@@ -1,4 +1,4 @@
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import { AccordionItem } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useIsMobile } from '@/hooks/useIsMobile'
@@ -7,11 +7,10 @@ import schema from '@jsonresume/schema/schema.json'
 import CodeMirror from '@uiw/react-codemirror'
 import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
-import { AlertCircle, ArrowLeft, CheckCircle2, Loader2 } from 'lucide-react'
-import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
-import { ErrorBoundary } from './ErrorBoundary'
-
-const LazyPDFPreview = lazy(() => import('./PDFPreview'))
+import { AlertCircle, ArrowLeft, CheckCircle2 } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import PDFPreviewSection from './PDFPreviewSection'
+import ValidationPanel from './ValidationPanel'
 
 interface ResumeEditorProps {
   initialResumeData: ResumeSchema
@@ -25,6 +24,7 @@ export default function ResumeEditor({ initialResumeData, onBack }: ResumeEditor
   const [isValid, setIsValid] = useState(true)
   const [isValidating, setIsValidating] = useState(false)
   const [pendingValidation, setPendingValidation] = useState<string | null>(null)
+  const isMobile = useIsMobile()
 
   const validator = useMemo(() => {
     const ajv = new Ajv({ strict: false, allErrors: true })
@@ -85,8 +85,7 @@ export default function ResumeEditor({ initialResumeData, onBack }: ResumeEditor
   return (
     <div className="flex h-screen flex-col gap-4 bg-neutral-50 max-sm:gap-0">
       <div className="container mx-auto flex flex-1 flex-col gap-4 overflow-hidden max-sm:gap-0 max-sm:px-0">
-        {/* Header */}
-        <header className="flex flex-shrink-0 flex-col gap-2 pt-2 max-sm:px-4 max-sm:pt-4">
+        <header className="flex flex-shrink-0 flex-col gap-2 p-4 sm:px-6 sm:pt-8">
           <div className="flex flex-col items-start gap-2">
             <Button variant="outline" onClick={onBack} className="flex-shrink-0">
               <ArrowLeft className="mr-2 h-4 w-4" />
@@ -101,8 +100,7 @@ export default function ResumeEditor({ initialResumeData, onBack }: ResumeEditor
           </div>
         </header>
 
-        <main className="grid min-h-0 flex-1 grid-cols-1 gap-0 overflow-hidden max-sm:gap-1 sm:gap-6 lg:grid-cols-2">
-          {/* Editor */}
+        <main className="grid min-h-0 flex-1 grid-cols-1 gap-1 overflow-hidden sm:grid-cols-2 sm:gap-6">
           <Card className="flex h-full min-h-0 flex-col max-sm:rounded-none max-sm:border-0 max-sm:pb-0 max-sm:shadow-none">
             <CardHeader className="flex-shrink-0 max-sm:px-4">
               <div className="flex items-center justify-between">
@@ -159,67 +157,40 @@ export default function ResumeEditor({ initialResumeData, onBack }: ResumeEditor
             </CardContent>
           </Card>
 
-          {/* Validation */}
-          <Card className="flex h-full min-h-0 flex-col max-sm:rounded-none max-sm:border-0 max-sm:shadow-none">
-            <CardHeader className="max-sm:-p-2 flex-shrink-0 max-sm:p-2 max-sm:pb-0">
-              <CardTitle className="text-base sm:text-xl">Validation</CardTitle>
-              <CardDescription className="text-xs sm:text-base">
-                Real-time validation feedback using JSON Resume schema
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="max-sm:-p-2 flex flex-1 flex-col space-y-2 max-sm:p-2 max-sm:pt-0">
-              {isValid ? (
-                <Alert>
-                  <CheckCircle2 className="h-4 w-4" />
-                  <AlertDescription>
-                    Your resume is valid! You can now export it to PDF or download the JSON.
-                  </AlertDescription>
-                </Alert>
-              ) : (
-                <>
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>
-                      Your resume has validation errors. Fix them to enable PDF export.
-                    </AlertDescription>
-                  </Alert>
+          {isMobile ? (
+            <div className="flex h-full min-h-0 flex-col">
+              <div className="max-sm:px-4">
+                <AccordionItem
+                  title={`Validation ${isValid ? '✓' : `(${validationErrors.length} errors)`}`}
+                  defaultOpen={!isValid}
+                >
+                  <ValidationPanel isValid={isValid} validationErrors={validationErrors} />
+                </AccordionItem>
 
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-medium">Validation Errors:</h4>
-                    <div className="space-y-1">
-                      {validationErrors.map((error, index) => (
-                        <div
-                          key={index}
-                          className="rounded border bg-red-50 p-2 text-sm text-red-600"
-                        >
-                          {error}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {isValid && (
-                <ErrorBoundary>
-                  <Suspense
-                    fallback={
-                      <div className="flex h-full items-center justify-center">
-                        <Loader2 className="h-8 w-8 animate-spin" />
-                        <span className="ml-2">Loading PDF preview...</span>
-                      </div>
-                    }
-                  >
-                    <LazyPDFPreview resumeData={resumeData} />
-                  </Suspense>
-                </ErrorBoundary>
-              )}
-            </CardContent>
-          </Card>
+                {isValid && (
+                  <AccordionItem title="PDF Preview" defaultOpen={!isMobile}>
+                    <PDFPreviewSection resumeData={resumeData} isMobile={isMobile} />
+                  </AccordionItem>
+                )}
+              </div>
+            </div>
+          ) : (
+            <Card className="flex h-full min-h-0 flex-col">
+              <CardHeader className="flex-shrink-0">
+                <CardTitle className="text-xl">Validation</CardTitle>
+                <CardDescription>
+                  Real-time validation feedback using JSON Resume schema
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex flex-1 flex-col space-y-2">
+                <ValidationPanel isValid={isValid} validationErrors={validationErrors} />
+                {isValid && <PDFPreviewSection resumeData={resumeData} isMobile={isMobile} />}
+              </CardContent>
+            </Card>
+          )}
         </main>
       </div>
 
-      {/* Footer space */}
       <footer className="flex h-10 flex-shrink-0 items-center justify-center border-t bg-neutral-100 sm:h-16">
         <p className="text-xs text-neutral-600 sm:text-base">
           Resume Editor - JSON Resume Schema v1.2.1
