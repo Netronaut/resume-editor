@@ -1,10 +1,10 @@
-import { useState, Suspense, lazy } from 'react'
-import { FileUpload } from './components/FileUpload'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { ErrorBoundary } from './components/ErrorBoundary'
 import { AlertCircle, Loader2 } from 'lucide-react'
+import { Suspense, lazy, useState } from 'react'
+import { ErrorBoundary } from './components/ErrorBoundary'
+import { FileUpload } from './components/FileUpload'
 
-const LazyResumeEditor = lazy(() => import('./components/ResumeEditor').then(m => ({ default: m.ResumeEditor })))
+const LazyResumeEditor = lazy(() => import('./components/ResumeEditor'))
 
 type AppState = 'upload' | 'edit'
 
@@ -46,7 +46,7 @@ export default function App() {
 
       {state === 'edit' && resumeData && (
         <ErrorBoundary>
-          <Suspense 
+          <Suspense
             fallback={
               <div className="flex min-h-screen items-center justify-center">
                 <Loader2 className="h-8 w-8 animate-spin" />

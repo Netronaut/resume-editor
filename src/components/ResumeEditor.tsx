@@ -1,21 +1,15 @@
-import { Download, ArrowLeft, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useState, Suspense, lazy } from 'react'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { EnhancedJsonEditor } from './EnhancedJsonEditor'
-import { ErrorBoundary } from './ErrorBoundary'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { useIsMobile } from '@/hooks/useIsMobile'
+import { json } from '@codemirror/lang-json'
 import schema from '@jsonresume/schema/schema.json'
+import CodeMirror from '@uiw/react-codemirror'
 import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
+import { AlertCircle, ArrowLeft, CheckCircle2, Loader2 } from 'lucide-react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import { ErrorBoundary } from './ErrorBoundary'
 
 const LazyPDFPreview = lazy(() => import('./PDFPreview'))
 
@@ -24,163 +18,99 @@ interface ResumeEditorProps {
   onBack: () => void
 }
 
-export function ResumeEditor({ initialResumeData, onBack }: ResumeEditorProps) {
+export default function ResumeEditor({ initialResumeData, onBack }: ResumeEditorProps) {
   const [resumeJson, setResumeJson] = useState(() => JSON.stringify(initialResumeData, null, 2))
   const [resumeData, setResumeData] = useState<ResumeSchema>(initialResumeData)
   const [validationErrors, setValidationErrors] = useState<string[]>([])
   const [isValid, setIsValid] = useState(true)
-  const [showPreview, setShowPreview] = useState(false)
   const [isValidating, setIsValidating] = useState(false)
   const [pendingValidation, setPendingValidation] = useState<string | null>(null)
 
-  // Set up AJV validator
   const validator = useMemo(() => {
     const ajv = new Ajv({ strict: false, allErrors: true })
     addFormats(ajv)
     return ajv.compile<ResumeSchema>(schema)
   }, [])
 
-  // Validate and update resume data
   const validateAndUpdate = useCallback(
     (jsonString: string) => {
       setIsValidating(true)
 
-      // Use setTimeout to make it async for the queuing system
-      setTimeout(() => {
-        try {
-          const parsed = JSON.parse(jsonString)
-          const valid = validator(parsed)
+      try {
+        const parsed = JSON.parse(jsonString)
+        const valid = validator(parsed)
 
-          if (valid) {
-            setResumeData(parsed)
-            setValidationErrors([])
-            setIsValid(true)
-          } else {
-            const errors =
-              validator.errors?.map(error => {
-                const path = error.instancePath || 'root'
-                const message = error.message || 'Invalid value'
-                return `${path}: ${message}`
-              }) || []
-            setValidationErrors(errors)
-            setIsValid(false)
-          }
-        } catch {
-          setValidationErrors(['Invalid JSON syntax'])
+        if (valid) {
+          setResumeData(parsed)
+          setValidationErrors([])
+          setIsValid(true)
+        } else {
+          const errors =
+            validator.errors?.map(error => {
+              const path = error.instancePath || 'root'
+              const message = error.message || 'Invalid value'
+              return `${path}: ${message}`
+            }) || []
+          setValidationErrors(errors)
           setIsValid(false)
-        } finally {
-          setIsValidating(false)
-
-          // Check if there's a pending validation to run
-          if (pendingValidation !== null && pendingValidation !== jsonString) {
-            const nextValidation = pendingValidation
-            setPendingValidation(null)
-            validateAndUpdate(nextValidation)
-          }
         }
-      }, 0)
+      } catch {
+        setValidationErrors(['Invalid JSON syntax'])
+        setIsValid(false)
+      } finally {
+        setIsValidating(false)
+
+        if (pendingValidation !== null && pendingValidation !== jsonString) {
+          const nextValidation = pendingValidation
+          setPendingValidation(null)
+          validateAndUpdate(nextValidation)
+        }
+      }
     },
     [validator, pendingValidation]
   )
 
-  const handleJsonChange = useCallback((value: string) => {
-    setResumeJson(value)
+  const handleJsonChange = useCallback((value?: string) => {
+    setResumeJson(value ?? '')
   }, [])
 
-  const handleTextareaInput = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
-    // This is for the enhanced editor's onInput event
-    const target = e.target as HTMLTextAreaElement
-    setResumeJson(target.value)
-  }, [])
-
-  // Smart validation trigger - immediate if not validating, queued if validating
   useEffect(() => {
     if (isValidating) {
-      // If currently validating, queue this validation
       setPendingValidation(resumeJson)
     } else {
-      // If not validating, start validation immediately
       validateAndUpdate(resumeJson)
     }
   }, [resumeJson, isValidating, validateAndUpdate])
 
-  const downloadJson = useCallback(() => {
-    if (!isValid) return
-
-    const blob = new Blob([resumeJson], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${resumeData.basics?.name || 'resume'}.json`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-  }, [resumeJson, resumeData.basics?.name, isValid])
-
   return (
-    <div className="flex h-screen flex-col bg-neutral-50">
-      <div className="container mx-auto flex flex-1 flex-col overflow-hidden p-6">
+    <div className="flex h-screen flex-col gap-4 bg-neutral-50 max-sm:gap-0">
+      <div className="container mx-auto flex flex-1 flex-col gap-4 overflow-hidden max-sm:gap-0 max-sm:px-0">
         {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="outline" onClick={onBack}>
+        <header className="flex flex-shrink-0 flex-col gap-2 pt-2 max-sm:px-4 max-sm:pt-4">
+          <div className="flex flex-col items-start gap-2">
+            <Button variant="outline" onClick={onBack} className="flex-shrink-0">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
             <div>
-              <h1 className="text-3xl font-bold text-neutral-900">Resume Editor</h1>
-              <p className="text-neutral-600">Edit your resume and see live validation feedback</p>
+              <h1 className="text-2xl font-bold text-neutral-900 sm:text-3xl">Resume Editor</h1>
+              <p className="text-sm text-neutral-600 sm:text-base">
+                Edit your resume and see live validation feedback
+              </p>
             </div>
           </div>
+        </header>
 
-          <div className="flex items-center gap-2">
-            <Dialog open={showPreview} onOpenChange={setShowPreview}>
-              <DialogTrigger asChild>
-                <Button disabled={!isValid}>
-                  <Download className="mr-2 h-4 w-4" />
-                  Preview PDF
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="h-[80vh] max-w-4xl">
-                <DialogHeader>
-                  <DialogTitle>PDF Preview</DialogTitle>
-                  <DialogDescription>Preview of your resume as PDF</DialogDescription>
-                </DialogHeader>
-                <div className="flex-1 overflow-hidden">
-                  {isValid && (
-                    <ErrorBoundary>
-                      <Suspense 
-                        fallback={
-                          <div className="flex h-full items-center justify-center">
-                            <Loader2 className="h-8 w-8 animate-spin" />
-                            <span className="ml-2">Loading PDF preview...</span>
-                          </div>
-                        }
-                      >
-                        <LazyPDFPreview resumeData={resumeData} />
-                      </Suspense>
-                    </ErrorBoundary>
-                  )}
-                </div>
-              </DialogContent>
-            </Dialog>
-
-            <Button onClick={downloadJson} disabled={!isValid}>
-              <Download className="mr-2 h-4 w-4" />
-              Download JSON
-            </Button>
-          </div>
-        </div>
-
-        <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
+        <main className="grid min-h-0 flex-1 grid-cols-1 gap-0 overflow-hidden max-sm:gap-1 sm:gap-6 lg:grid-cols-2">
           {/* Editor */}
-          <Card className="flex min-h-0 flex-col">
-            <CardHeader className="flex-shrink-0">
+          <Card className="flex h-full min-h-0 flex-col max-sm:rounded-none max-sm:border-0 max-sm:pb-0 max-sm:shadow-none">
+            <CardHeader className="flex-shrink-0 max-sm:px-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Resume JSON</CardTitle>
-                  <CardDescription>Edit your resume data in JSON format</CardDescription>
+                  <CardTitle className="text-base sm:text-xl">Resume JSON</CardTitle>
+                  <CardDescription className="text-xs sm:text-base">
+                    Edit your resume data in JSON format
+                  </CardDescription>
                 </div>
                 <div className="flex items-center gap-2">
                   {isValid ? (
@@ -199,26 +129,45 @@ export function ResumeEditor({ initialResumeData, onBack }: ResumeEditorProps) {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="flex min-h-0 flex-1 flex-col">
-              <EnhancedJsonEditor
-                value={resumeJson}
-                onChange={handleJsonChange}
-                onInput={handleTextareaInput}
-                className="min-h-0 flex-1"
-                placeholder="Enter your resume JSON here..."
-              />
+            <CardContent className="flex min-h-0 flex-1 flex-col max-sm:px-0">
+              <div className="min-h-0 flex-1 overflow-hidden border-y sm:rounded-md sm:border">
+                <CodeMirror
+                  value={resumeJson}
+                  onChange={handleJsonChange}
+                  extensions={[json()]}
+                  theme="light"
+                  height="100%"
+                  style={{
+                    fontSize: '14px',
+                    fontFamily:
+                      'ui-monospace, SFMono-Regular, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace',
+                    height: '100%',
+                  }}
+                  basicSetup={{
+                    lineNumbers: true,
+                    foldGutter: true,
+                    dropCursor: false,
+                    allowMultipleSelections: false,
+                    indentOnInput: true,
+                    bracketMatching: true,
+                    closeBrackets: true,
+                    autocompletion: true,
+                    highlightSelectionMatches: false,
+                  }}
+                />
+              </div>
             </CardContent>
           </Card>
 
           {/* Validation */}
-          <Card className="flex min-h-0 flex-col">
-            <CardHeader className="flex-shrink-0">
-              <CardTitle>Validation</CardTitle>
-              <CardDescription>
+          <Card className="flex h-full min-h-0 flex-col max-sm:rounded-none max-sm:border-0 max-sm:shadow-none">
+            <CardHeader className="max-sm:-p-2 flex-shrink-0 max-sm:p-2 max-sm:pb-0">
+              <CardTitle className="text-base sm:text-xl">Validation</CardTitle>
+              <CardDescription className="text-xs sm:text-base">
                 Real-time validation feedback using JSON Resume schema
               </CardDescription>
             </CardHeader>
-            <CardContent className="flex-1 space-y-4 overflow-y-auto">
+            <CardContent className="max-sm:-p-2 flex flex-1 flex-col space-y-2 max-sm:p-2 max-sm:pt-0">
               {isValid ? (
                 <Alert>
                   <CheckCircle2 className="h-4 w-4" />
@@ -251,30 +200,31 @@ export function ResumeEditor({ initialResumeData, onBack }: ResumeEditorProps) {
                 </>
               )}
 
-              <div className="border-t pt-4">
-                <h4 className="mb-2 text-sm font-medium">Schema Information:</h4>
-                <p className="text-sm text-neutral-600">
-                  Your resume is validated against the{' '}
-                  <a
-                    href="https://jsonresume.org/schema/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
+              {isValid && (
+                <ErrorBoundary>
+                  <Suspense
+                    fallback={
+                      <div className="flex h-full items-center justify-center">
+                        <Loader2 className="h-8 w-8 animate-spin" />
+                        <span className="ml-2">Loading PDF preview...</span>
+                      </div>
+                    }
                   >
-                    JSON Resume v1.2.1 schema
-                  </a>
-                  . Make sure all required fields are present and correctly formatted.
-                </p>
-              </div>
+                    <LazyPDFPreview resumeData={resumeData} />
+                  </Suspense>
+                </ErrorBoundary>
+              )}
             </CardContent>
           </Card>
-        </div>
+        </main>
       </div>
 
       {/* Footer space */}
-      <div className="flex h-16 flex-shrink-0 items-center justify-center border-t bg-neutral-100">
-        <p className="text-sm text-neutral-600">Resume Editor - JSON Resume Schema v1.2.1</p>
-      </div>
+      <footer className="flex h-10 flex-shrink-0 items-center justify-center border-t bg-neutral-100 sm:h-16">
+        <p className="text-xs text-neutral-600 sm:text-base">
+          Resume Editor - JSON Resume Schema v1.2.1
+        </p>
+      </footer>
     </div>
   )
 }
