@@ -1,8 +1,8 @@
 import { Text, View } from '@react-pdf/renderer'
 import colors from 'tailwindcss/colors'
-import { colorOclToHex } from '../lib/util'
 import { Image } from './Image'
 import { spacing } from './styles'
+import { colorOclToHex } from './util'
 
 export function HeaderInfo({ resume }: { resume: ResumeSchema }) {
   return (

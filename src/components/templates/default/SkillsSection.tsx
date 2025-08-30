@@ -1,9 +1,9 @@
 import { Text, View } from '@react-pdf/renderer'
 import colors from 'tailwindcss/colors'
 import { useTranslations } from 'use-intl'
-import { colorOclToHex } from '../lib/util'
 import { Headline } from './Headline'
 import { Section } from './Section'
+import { colorOclToHex } from './util'
 
 const Tag = ({ label }: { label: string }) => (
   <View

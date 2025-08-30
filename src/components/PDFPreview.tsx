@@ -1,7 +1,7 @@
 import { PDFViewer } from '@react-pdf/renderer'
 import { NextIntlClientProvider } from 'next-intl'
 import messages from '../i18n/de.json'
-import { ResumeDocument } from './ResumeDocument'
+import { ResumeDocument } from './templates/default/ResumeDocument'
 
 interface PDFPreviewProps {
   resumeData: ResumeSchema

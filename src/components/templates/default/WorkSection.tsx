@@ -1,6 +1,6 @@
+import { sortByProp } from '@/lib/util'
 import { Link, Text, View } from '@react-pdf/renderer'
 import { useTranslations } from 'use-intl'
-import { sortByProp } from '../lib/util'
 import { Headline } from './Headline'
 import { List, ListItem } from './List'
 import { Section } from './Section'

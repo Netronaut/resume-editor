@@ -2,7 +2,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import { Download } from 'lucide-react'
 import { NextIntlClientProvider } from 'next-intl'
 import messages from '../i18n/de.json'
-import { ResumeDocument } from './ResumeDocument'
+import { ResumeDocument } from './templates/default/ResumeDocument'
 import { Button } from './ui/button'
 
 interface PDFDownloadProps {

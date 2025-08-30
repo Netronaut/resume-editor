@@ -1,7 +1,6 @@
 import { Document, Page, Text, View } from '@react-pdf/renderer'
 import { useTranslations } from 'next-intl'
 import colors from 'tailwindcss/colors'
-import { colorOclToHex } from '../lib/util'
 import { CertificateSection } from './CertificateSection'
 import { ContactSection } from './ContactSection'
 import { EducationSection } from './EducationSection'
@@ -10,6 +9,7 @@ import { LanguagesSection } from './LanguagesSection'
 import { ProjectsSection } from './ProjectsSection'
 import { SkillsSection } from './SkillsSection'
 import { spacing } from './styles'
+import { colorOclToHex } from './util'
 import { WorkSection } from './WorkSection'
 
 export function ResumeDocument({ resume }: { resume: ResumeSchema }) {
