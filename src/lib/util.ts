@@ -1,5 +1,3 @@
-import { converter, formatHex } from 'culori'
-
 export function sortByProp<T, K extends keyof T>(
   prop: K,
   direction: 'asc' | 'desc' = 'asc'
@@ -18,10 +16,4 @@ export function sortByProp<T, K extends keyof T>(
 
 export function notEmpty<T>(value: T | null | undefined): value is T {
   return value !== null && value !== undefined
-}
-
-const oklchToHex = converter('oklch')
-
-export function colorOclToHex(oclColor: string) {
-  return formatHex(oklchToHex(oclColor))
 }
