@@ -1,69 +1,58 @@
-# React + TypeScript + Vite
+# Resume Editor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a JSON Resume editor with live schema validation and PDF generation. Upload a `resume.json`, edit it with real‑time validation, preview it, and export to PDF.
 
-Currently, two official plugins are available:
+This project uses the JSON Resume schema: https://github.com/jsonresume/resume-schema/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Highlights**
 
-## Expanding the ESLint configuration
+- Live validation against JSON Resume v1.2.1 (AJV)
+- JSON editing with CodeMirror
+- PDF preview (desktop) and PDF download everywhere (with [React-PDF](https://react-pdf.org/))
+- Opinionated PDF template (Header, Contact, Languages, Education, Certificates, Skills, Work, Projects)
+- i18n‑ready (en/de); PDF currently renders with English messages by default
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Tech Stack**
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- `React 19`, `TypeScript`, `Vite 7`
+- `@react-pdf/renderer`, `@jsonresume/schema`, `ajv` + `ajv-formats`
+- `next-intl` for i18n
+- `Tailwind CSS v4`, Radix primitives, shadcn‑style UI components, lucide icons
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+**Design Choices**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- PDF rendering is done via `@react-pdf/renderer`, which has its own styling model distinct from the browser. Tailwind utility classes are used for the web UI; the PDF uses inline styles suited to React PDF. This is intentional.
+- The app is fully client‑side and does not include server‑side persistence by design.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Quick Start
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Install dependencies ([bun preferred](https://bun.com/)): `bun install`
+- Dev server: `bun dev`
+- Build: `bun run build`
+- Lint: `bun run lint`
+- Preview: `bun preview`
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Use the sample dataset at `public/sample.en.json` as a starting point.
+
+Open the app, upload your `resume.json`, and start editing. The editor validates changes in real time; when valid, you can preview or download a PDF.
+
+Note: JSON must follow the JSON Resume schema v1.2.1. See the official schema: https://github.com/jsonresume/resume-schema/
+
+## Contributing & Roadmap
+
+You are very welcome to contribute to this project! Make sure to read [CONTRIBUTING.md](./CONTRIBUTING.md) for further details.
+
+[Planned roadmap](https://github.com/Netronaut/resume-editor/issues/1) is a great place to start. It includes:
+
+- a user‑visible locale switcher
+- mobile version
+- several other extensions and bug fixes
+
+## Credits
+
+- JSON Resume schema: https://github.com/jsonresume/resume-schema/
+- Sample image: https://unsplash.com/de/fotos/mann-macht-selfie-tidSLv-UaNs
+
+## License
+
+MIT
