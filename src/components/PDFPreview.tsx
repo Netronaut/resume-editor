@@ -1,6 +1,6 @@
+import { defaultLocale, pdfMessages } from '@/config'
 import { PDFViewer } from '@react-pdf/renderer'
 import { NextIntlClientProvider } from 'next-intl'
-import messages from '../i18n/de.json'
 import { ResumeDocument } from './templates/default/ResumeDocument'
 
 interface PDFPreviewProps {
@@ -9,7 +9,7 @@ interface PDFPreviewProps {
 
 export default function PDFPreview({ resumeData }: PDFPreviewProps) {
   const resumeDocument = (
-    <NextIntlClientProvider locale="de" messages={messages}>
+    <NextIntlClientProvider locale={defaultLocale} messages={pdfMessages}>
       <ResumeDocument resume={resumeData} />
     </NextIntlClientProvider>
   )
